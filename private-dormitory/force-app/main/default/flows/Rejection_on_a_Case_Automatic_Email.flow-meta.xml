@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Automatically sends a rejection email to the resident.</description>
+        <name>Case_Rejection_Email_Sending</name>
+        <label>Case Rejection Email Sending</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recipientAddresses</name>
+            <value>
+                <collectionElements>
+                    <elementReference>$Record.ContactEmail</elementReference>
+                </collectionElements>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>composeEmailContent</name>
+            <value>
+                <stringValue>True</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>CaseRejectionSubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>CaseRejectionemailbody</elementReference>
+                <inputConfiguratorMode>Resource</inputConfiguratorMode>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientId</name>
+            <value>
+                <elementReference>$Record.Contact.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+        <versionString>2.0.1</versionString>
+    </actionCalls>
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>Rejection on a Case Automatic Email {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Rejection on a Case Automatic Email</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Case_Rejection_Email_Sending</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status_by_Admin__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Rejected</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>CaseRejectionemailbody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Dear {!$Record.ContactId},
+
+Thank you for reaching out to The Best Life Private Dormitory management team.
+
+After carefully reviewing your case #{!$Record.CaseNumber} regarding &quot;{!$Record.Subject}&quot;, 
+we regret to inform you that we are unable to proceed with your request at this time.{!$User.FirstName}
+
+If you have any additional information or would like to discuss this decision further, 
+please do not hesitate to contact us at the reception desk or reply to this email.
+
+We appreciate your understanding and remain committed to making your stay as 
+comfortable as possible.
+
+Best regards,
+The Best Life Private Dormitory
+Administrator 
+{!$User.FirstName} {!$User.LastName}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>CaseRejectionSubject</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Update on Your Case #{!$Record.CaseNumber} — {!$Record.Subject}</text>
+    </textTemplates>
+</Flow>

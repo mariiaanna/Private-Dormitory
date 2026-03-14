@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Emergency_Phone__c</fullName>
+    <description>Enter the Phone number of the person we should contact in case of an emergency.</description>
+    <label>Emergency Phone</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Phone</type>
+</CustomField>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Sending_email_to_Handyman_about_the_Failure</name>
+        <label>Sending email to Handyman about the Failure</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recipientAddresses</name>
+            <value>
+                <collectionElements>
+                    <stringValue>roman.lucishin@gmail.com</stringValue>
+                </collectionElements>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>composeEmailContent</name>
+            <value>
+                <stringValue>True</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>CaseFailureSubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>CaesFailureBody</elementReference>
+                <inputConfiguratorMode>Resource</inputConfiguratorMode>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>attachmentId</name>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+        <versionString>2.0.1</versionString>
+    </actionCalls>
+    <actionCalls>
+        <name>Sending_Notification_to_Admin</name>
+        <label>Sending Notification to Admin</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>Sending_email_to_Handyman_about_the_Failure</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <elementReference>Getting_notification_type.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>RecipientID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <elementReference>NotificationMaintananceCaseTitle</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <elementReference>NotificationBodyForAdminAboutMaintanceCase</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>customNotificationAction</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>recipient_ID_assignment</name>
+        <label>recipient ID assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>RecipientID</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_Admin_user.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Getting_notification_type</targetReference>
+        </connector>
+    </assignments>
+    <environments>Default</environments>
+    <interviewLabel>Maintanance Failure Email Alert for Handy man {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Maintanance Failure Email Alert for Handy man</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Admin_user</name>
+        <label>Get Admin user</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>recipient_ID_assignment</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Alias</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>rom</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Getting_notification_type</name>
+        <label>Getting notification type</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Sending_Notification_to_Admin</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0MLgL000001fxl7WAA</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CustomNotificationType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Admin_user</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>012gL000004DEqrQAG</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>CaesFailureBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Dear Handy Man,
+
+A new maintenance request has been submitted by a resident and requires your attention.
+
+REQUEST DETAILS:
+———————————————————————————
+Case Number:   {!$Record.CaseNumber}
+Subject:       {!$Record.Subject}
+Room:          {!$Record.Room__r.Name}
+Priority:      {!$Record.Priority}
+Type:          {!$Record.Type}
+———————————————————————————
+
+Description:
+{!$Record.Description}
+
+Please review this request and proceed as soon as possible based on the priority level.
+
+If you have any questions, contact the administrator.
+
+Best regards,
+The Best Life Private Dormitory
+Management Team</text>
+    </textTemplates>
+    <textTemplates>
+        <name>CaseFailureSubject</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>New Maintenance Request — {!$Record.Subject} | Room {!$Record.Room__r.Name}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>NotificationBodyForAdminAboutMaintanceCase</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Room {!$Record.Room__r.Name} | {!$Record.RecordType.DeveloperName} | Submitted by {!$Record.Contact.Name} . Please assign a handyman as soon as possible.</text>
+    </textTemplates>
+    <textTemplates>
+        <name>NotificationMaintananceCaseTitle</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>New Maintenance Request — {!$Record.Priority} Priority</text>
+    </textTemplates>
+    <variables>
+        <name>RecipientID</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

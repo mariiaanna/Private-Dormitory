@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_choosin_If_Room_Needs_Maintenanc</fullName>
+    <active>true</active>
+    <description>Prevents to choose the room in resident record page if the room needs maintenance.</description>
+    <errorConditionFormula>Room__r.Needs_Maintenance__c = TRUE</errorConditionFormula>
+    <errorDisplayField>Room__c</errorDisplayField>
+    <errorMessage>This room is currently unavailable for choosing. 
+It has been marked as requiring maintenance. 
+Please select a different room or contact the administrator.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Email_to_HandyMan</name>
+        <label>Email to HandyMan</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recipientAddresses</name>
+            <value>
+                <collectionElements>
+                    <elementReference>HandyManEmailadress</elementReference>
+                </collectionElements>
+                <collectionElements>
+                    <stringValue>roman.lucishin@gmail.com</stringValue>
+                </collectionElements>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>composeEmailContent</name>
+            <value>
+                <stringValue>True</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>RoomInspectionAlertSubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>RoomInspectionAlertBody</elementReference>
+                <inputConfiguratorMode>Resource</inputConfiguratorMode>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+        <versionString>2.0.1</versionString>
+    </actionCalls>
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>Room Inspection Alert to Handyman {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Room Inspection Alert to Handyman</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Email_to_HandyMan</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Overall_Condition__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Needs Attention</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Overall_Condition__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Out of Service</stringValue>
+            </value>
+        </filters>
+        <object>Room_Inspection__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>HandyManEmailadress</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;roman.lucishin@gmail.com&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>RoomInspectionAlertBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Dear Handy Man,
+
+A room inspection has been completed and damages have been identified 
+that require your immediate attention.
+
+INSPECTION DETAILS:
+———————————————————————————
+Inspection Number:   {!$Record.Name}
+Room:                {!$Record.Room__r.Name}
+Inspection Type:     {!$Record.Inspection_Type__c}
+Inspected By:        {!$User.FirstName} {!$User.LastName}
+Overall Condition:   {!$Record.Overall_Condition__c}
+———————————————————————————
+
+CONDITION BREAKDOWN:
+———————————————————————————
+Walls:            {!$Record.Walls__c}
+Furniture:        {!$Record.Furniture__c}
+Bathroom:         {!$Record.Bathroom__c}
+Flooring:         {!$Record.Flooring__c}
+Windows &amp; Doors:  {!$Record.Windows_Doors__c}
+———————————————————————————
+
+Additional Notes:
+{!$Record.Notes__c}
+
+Please prioritize this room and carry out the necessary repairs as soon 
+as possible. The room has been marked as Out of Service until further notice.
+
+If you have any questions, contact the administrator.
+
+Best regards,
+The Best Life Private Dormitory
+Management Team</text>
+    </textTemplates>
+    <textTemplates>
+        <name>RoomInspectionAlertSubject</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Room Inspection Alert — Damage Detected | Room {!$Record.Room__r.Name}</text>
+    </textTemplates>
+</Flow>

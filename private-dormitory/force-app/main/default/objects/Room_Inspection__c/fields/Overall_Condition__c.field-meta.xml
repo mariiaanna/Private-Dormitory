@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Overall_Condition__c</fullName>
+    <description>Formula field that automatically calculates the overall room condition 
+based on inspection results for Walls, Furniture, Bathroom, Flooring, 
+and Windows/Doors. Returns &quot;Out of Service&quot; if any area has Major Damage, 
+&quot;Needs Attention&quot; if any area has Minor Damage, and &quot;Clean &amp; Ready&quot; if 
+all areas are in Good condition.</description>
+    <externalId>false</externalId>
+    <formula>IF(
+  OR(
+    ISPICKVAL(Walls__c, &quot;Major Damage&quot;),
+    ISPICKVAL(Furniture__c, &quot;Major Damage&quot;),
+    ISPICKVAL(Bathroom__c, &quot;Major Damage&quot;),
+    ISPICKVAL(Flooring__c, &quot;Major Damage&quot;),
+    ISPICKVAL(Windows_Doors__c, &quot;Major Damage&quot;)
+  ),
+  &quot;Out of Service&quot;,
+  IF(
+    OR(
+      ISPICKVAL(Walls__c, &quot;Minor Damage&quot;),
+      ISPICKVAL(Furniture__c, &quot;Minor Damage&quot;),
+      ISPICKVAL(Bathroom__c, &quot;Minor Damage&quot;),
+      ISPICKVAL(Flooring__c, &quot;Minor Damage&quot;),
+      ISPICKVAL(Windows_Doors__c, &quot;Minor Damage&quot;)
+    ),
+    &quot;Needs Attention&quot;,
+    &quot;Clean &amp; Ready&quot;
+  )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Automatically calculated based on room inspection results. 
+&quot;Clean &amp; Ready&quot; — all areas are in good condition. 
+&quot;Needs Attention&quot; — minor damages detected, service required. 
+&quot;Out of Service&quot; — major damages detected, room cannot be occupied.</inlineHelpText>
+    <label>Overall Condition</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

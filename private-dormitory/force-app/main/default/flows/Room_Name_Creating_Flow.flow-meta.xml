@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Creates the room name using Floor and Number fields</description>
+        <name>Creating_Room_Name_number</name>
+        <label>Creating Room Name number</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>{!$Record.Floor__c}{!$Record.Number__c}</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <environments>Default</environments>
+    <interviewLabel>Room Name Creating Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Room Name Creating Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Creating_Room_Name_number</targetReference>
+        </connector>
+        <object>Room__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

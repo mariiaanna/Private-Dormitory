@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Current_Occupancy__c</fullName>
+    <description>Roll-up summary field that counts all active bookings for this room.</description>
+    <label>Current Occupancy</label>
+    <summaryForeignKey>Booking__c.Room__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

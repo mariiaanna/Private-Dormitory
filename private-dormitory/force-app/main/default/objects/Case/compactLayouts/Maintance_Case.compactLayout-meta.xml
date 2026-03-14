@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Maintance_Case</fullName>
+    <fields>Subject</fields>
+    <fields>ContactId</fields>
+    <fields>CaseNumber</fields>
+    <fields>Type</fields>
+    <fields>Priority</fields>
+    <fields>Is_Anonymous__c</fields>
+    <fields>Status</fields>
+    <label>Maintance Case</label>
+</CompactLayout>

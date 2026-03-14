@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Booking__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>Reference to the booking this invoice is generated for. Used to link the invoice with the corresponding guest stay, reservation details, and charges.</description>
+    <label>Booking</label>
+    <referenceTo>Booking__c</referenceTo>
+    <relationshipLabel>Invoices</relationshipLabel>
+    <relationshipName>Invoices</relationshipName>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>
