@@ -1,0 +1,9 @@
+.custom-benefit-card {
+    background: white !important;
+    border-radius: 20px !important;
+    border: none !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+.custom-benefit-card:hover { transform: translateY(-10px); }
+.custom-blue-text { color: #0070d2 !important; font-weight: 700; }
