@@ -1,0 +1,42 @@
+.custom-header {
+    background-color: rgb(255, 236, 157); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding: 15px 5%;
+    left: 0; 
+    right: 0; 
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    cursor: pointer;
+    letter-spacing: -0.5px;
+}
+
+.nav-link {
+    color: #333;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #0070d2;
+    text-decoration: none;
+}
+
+.custom-login-button {
+    background-color: rgb(253, 205, 0) !important; 
+    border: none !important;
+    border-radius: 50px !important;
+    color: #333 !important;
+    font-weight: 600 !important;
+    padding: 10px 25px !important;
+    line-height: normal; 
+}
+
+.custom-login-button:hover {
+    background-color: rgb(224, 191, 48) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}

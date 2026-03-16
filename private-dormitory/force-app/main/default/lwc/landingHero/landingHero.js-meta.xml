@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    
+    <isExposed>true</isExposed>
+    
+    <masterLabel>Landing Hero Section</masterLabel>
+    <description>Hero section with background image and text configurable in Builder.</description>
+
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="imageUrl" type="String" label="Background Image URL" 
+                      description="Paste the direct link to the image (e.g. from Files or Static Resource)"/>
+            
+            <property name="mainTitle" type="String" label="Main Title" 
+                      default="Welcome to Your New Home"/>
+            
+            <property name="subTitle" type="String" label="Subtitle" 
+                      default="The best private dormitory for your successful study"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
