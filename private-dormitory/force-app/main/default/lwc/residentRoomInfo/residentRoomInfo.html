@@ -1,0 +1,24 @@
+<template>
+    <lightning-card title="My Accommodation" icon-name="standard:home">
+        <div class="slds-p-around_medium">
+            <template if:true={booking}>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col">
+                        <p class="slds-text-title">Room Number</p>
+                        <p class="slds-text-heading_medium">{booking.Room__r.Name}</p>
+                    </div>
+                    <div class="slds-col">
+                        <p class="slds-text-title">Type</p>
+                        <p>{booking.Room__r.Type__c}</p>
+                    </div>
+                </div>
+                <div class="slds-m-top_medium">
+                    <p>Stay Period: {booking.Start_Date__c} — {booking.End_Date__c}</p>
+                </div>
+            </template>
+            <template if:false={booking}>
+                <p>No active booking found.</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

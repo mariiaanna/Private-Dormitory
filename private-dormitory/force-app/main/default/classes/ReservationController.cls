@@ -61,4 +61,30 @@ public with sharing class ReservationController {
             Status__c = 'Scheduled'
         );
     }
+    @AuraEnabled(cacheable=true)
+    public static List<Reservation__c> getMyReservations() {
+        User u = [SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
+        if (u.ContactId == null) return new List<Reservation__c>();
+
+        return [SELECT Id, Inventory__r.Name, Start_Time__c, End_Time__c, Status__c 
+                FROM Reservation__c 
+                WHERE Resident__c = :u.ContactId 
+                AND Status__c = 'Scheduled'
+                AND Start_Time__c >= :Datetime.now()
+                ORDER BY Start_Time__c ASC];
+    }
+
+    @AuraEnabled
+    public static void cancelReservation(Id resId) {
+        Reservation__c res = [SELECT Id, Start_Time__c, Status__c FROM Reservation__c WHERE Id = :resId LIMIT 1];
+        
+        Long diffInMinutes = (res.Start_Time__c.getTime() - DateTime.now().getTime()) / 60000;
+        
+        if (diffInMinutes < 30) {
+            throw new AuraHandledException('Too late to cancel! Reservations must be cancelled at least 30 minutes before the start.');
+        }
+
+        res.Status__c = 'Cancelled';
+        update res;
+    }
 }
